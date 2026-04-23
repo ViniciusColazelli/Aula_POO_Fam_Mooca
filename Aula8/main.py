@@ -1,37 +1,6 @@
-import sqlite3
+from connect import Connect
+from usuario import Usuario
 
-class Usuario:
-    def __init__(self, nome, email):
-        self._nome = nome
-        self._email = email
-    
-    @property # Get
-    def nome(self):
-        return self._nome
-    
-    @nome.setter # Set
-    def nome(self, valor):
-        self._nome = valor
-
-
-class Connect:
-    def __init__(self):
-        # Cria a conexão e a tabela
-        self.banco = sqlite3.connect('aula.db')
-        self.cursor = self.banco.cursor()
-        self.cursor.execute("CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY, nome TEXT, email TEXT)")
-
-    def inserir(self, u):
-        self.cursor.execute("INSERT INTO user (nome, email) VALUES (?, ?)", (u.nome, u._email))
-        self.banco.commit()
-
-    def alterar(self, id, novo_nome):
-        self.cursor.execute("UPDATE user SET nome = ? WHERE id = ?", (novo_nome, id))
-        self.banco.commit()
-
-    def listar(self):
-        return self.cursor.execute("SELECT * FROM user").fetchall()
-    
 if __name__ == "__main__":
     db = Connect()
 
